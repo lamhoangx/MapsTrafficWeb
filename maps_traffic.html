@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <title>Google Maps JavaScript API v3 Example: Directions Complex</title>
+        <link href="https://google-developers.appspot.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+        <style>
+                                        #directions-panel {
+                                        height: 100%;
+                                        float: right;
+                                        width: 390px;
+                                        overflow: auto;
+                                        }
+                                        #map-canvas {
+                                        margin-right: 400px;
+                                        }
+                                        #control {
+                                            background: #fff;
+                                            padding: 5px;
+                                            font-size: 13px;
+                                            font-family: Arial;
+                                            border: 1px solid #ccc;
+                                            box-shadow: 0 2px 2px rgba(20, 20, 20, 0.4);
+                                            display: shown;
+                                        }
+                                        @media print {
+                                        #map-canvas {
+                                        height: 500px;
+                                        margin: 0;
+                                        }
+                                        #directions-panel {
+                                        float: none;
+                                        width: auto;
+                                        }
+                                        }
+        </style>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBVgnxLy_BQCtYPDmD8v7SEIke5kGsfZJY&sensor=false"></script>
+    </head>
+    <!-- GET: get step move : https://maps.googleapis.com/maps/api/directions/json?origin=Chợ+Bến+Thành&destination=Bệnh+viện+Từ+Dũ&key=AIzaSyBVgnxLy_BQCtYPDmD8v7SEIke5kGsfZJY -->
+    <body>
+        <div id="control">
+            <strong>Điểm bắt đầu: </strong>
+            <select id="start" onchange="calcRoute()">
+            <option value="Bến xe quận 8, phường 5, Hồ Chí Minh, Việt Nam">Ben Xe Q8</option>
+                <option value="Trường Đại học Công nghệ Thông tin ĐHQG-HCM">UIT</option>
+                <option value="Công viên giải trí Suối Tiên">Suoi Tien</option>
+                <option value="Trường Đại học Sư phạm Kỹ thuật Tp.HCM">SPK</option>
+                <option value="Đại học khoa học tự nhiên TP.HCM">Đại học KHTN</option>
+                <option value="Bệnh viện Từ Dũ">Bệnh viện Từ Dũ</option>
+                <option value="Đại học Sài Gòn">Đại học Sài Gòn</option>
+                <option value="Ngã tư Hàng Xanh">Ngã tư Hàng Xanh</option>
+                <option value="Chợ Bến Thành">Chợ Bến Thành</option>
+                <option value="Bệnh Viện K, Quán Sứ">Bệnh Viện K, Quán Sứ</option>
+                // Thử Nghiệm với đường đi HN
+            </select>
+            <strong>Điểm kết thúc: </strong>
+            <select id="end" onchange="calcRoute()">
+                <
+                
+                <option value="Bến xe quận 8, phường 5, Hồ Chí Minh, Việt Nam">Ben Xe Q8</option>
+                <option value="Công viên giải trí Suối Tiên">Suoi Tien</option>
+                <option value="Trường Đại học Công nghệ Thông tin ĐHQG-HCM">UIT</option>
+                <option value="Trường Đại học Sư phạm Kỹ thuật Tp.HCM">SPK</option>
+                <option value="Đại học khoa học tự nhiên TP.HCM">Đại học KHTN</option>
+                <option value="Bệnh viện Từ Dũ">Bệnh viện Từ Dũ</option>
+                <option value="Đại học Sài Gòn">Đại học Sài Gòn</option>
+                <option value="Ngã tư Hàng Xanh">Ngã tư Hàng Xanh</option>
+                <option value="Chợ Bến Thành">Chợ Bến Thành</option>
+                <option value="Bệnh viện Trung ương Quân Đội 108, Trần Hưng Đạo">Bệnh viện Trung ương Quân Đội 108</option>
+                // Thử Nghiệm với đường đi HN
+            </select>
+            <strong>Mode of Travel: </strong>
+            <select id="mode" onchange="calcRoute()">
+                <option value="DRIVING">Driving</option>
+                <option value="WALKING">Walking</option>
+                <option value="BICYCLING">Bicycling</option>
+                <option value="TRANSIT">Transit</option>
+            </select>
+        </div>
+        <div id="directions-panel">DERECTION
+            <button id = "btnPost" onclick="postDataToServer();"> POST DATA</button>
+            <br>
+            <div id = "dataJson">DATA JSON</div>
+            <br>
+            <div>
+                <h6>Location</h6>
+                <input id = "edLoc"type = "text" name="edLocation" >
+                <h6>Latitude</h6>
+                <input id="edLat" type = "text" name="edLatitude" value="0">
+                <h6>Longitude</h6>
+                <input id="edLng" type = "text" name="edLongitude" value="0">
+                <h6>Error</h6>
+                <input id="edErr" type = "text" name="edError">
+                <br>
+                <button id ="btnPostLocation" onclick="postLocationToServer();"> Post Location</button>
+            </div>
+        </div>
+        <div id="map-canvas">MAPS</div>
+        <div id="directions_expand">LEG</div>
+    </body>
+    <script src="mapstraffic.js"></script>
+    <script src="jquery-1.9.0.js"></script>
+</html>
