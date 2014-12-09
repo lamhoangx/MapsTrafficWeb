@@ -25,7 +25,7 @@ function initialize() {
         // populate yor box/field with lat, lng
         //alert("Lat=" + lat + "; Lng=" + lng);
         $('#edLat').val(lat);
-        $('#edLng').val(lat);
+        $('#edLng').val(lng);
         console.log(event.toSource());
         // document.getElementsByName("")
     });
