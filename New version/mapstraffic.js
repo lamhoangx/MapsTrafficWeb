@@ -16,9 +16,9 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); //hiển thị các thông báo khi chỉ dẫn
     directionsDisplay.setMap(map);
     //directionsDisplay.setPanel(document.getElementById('directions-panel'));//hiển thị các kết quả chỉ dẫn
-    var control = document.getElementById('control');
-    control.style.display = 'block';
-    map.controls[google.maps.ControlPosition.TOP].push(control);
+    //var control = document.getElementById('control');
+    //control.style.display = 'block';
+    //map.controls[google.maps.ControlPosition.TOP].push(control);
     google.maps.event.addListener(map, 'click', function(event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
