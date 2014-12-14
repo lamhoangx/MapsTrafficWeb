@@ -1,0 +1,15 @@
+@media print {
+#my_location {
+        width: 50px;
+        height: 50px;
+        margin: 0;
+   }
+   #directions-panel {
+       float: none;
+       width: auto;
+  }
+}
+.ui-listview sup {
+    font-size: 0.6em;
+    color: #cc0000;
+}
