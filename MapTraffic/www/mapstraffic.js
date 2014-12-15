@@ -96,7 +96,7 @@ function calcRoute() {
                 arrLatLng.push(new google.maps.LatLng(route.overview_path[i].k, route.overview_path[i].B));
             }
 
-
+		/*
              flightPath = new google.maps.Polyline({
               path: arrLatLng,
               geodesic: true,
@@ -107,13 +107,14 @@ function calcRoute() {
 
             // Dùng hàm setMap để gắn vào bản đồ
             flightPath.setMap(map);
-
+		*/
             var lengthDataJson = dataJsonStreet.length;
             dataJsonStreet = dataJsonStreet.substring(0, lengthDataJson - 1);
             dataJsonStreet += ']}';
 
             //post data into server
             postDataToServer(dataJsonStreetJ);
+            alert("Success");
             //summaryPanel.innerHTML += dataJsonStreet + "<br>Length: " + arrLatLng.length;
             //summaryPanel.innerHTML += arrLatLng.toString();
             // Các tọa độ của đường thẳng sẽ đi qua
