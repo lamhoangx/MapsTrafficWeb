@@ -1,5 +1,5 @@
 
-var server = 'http://128.199.139.117:13373';
+var server = 'http://128.199.139.117';
 var dataJsonStreet;
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService(); //gọi direction service
