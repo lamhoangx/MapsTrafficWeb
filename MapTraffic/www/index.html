@@ -16,24 +16,37 @@
    </head>
    <body>
       <div data-role="page" id = "mainPager">
-         <div data-role="header" data-position="fixed">
-            <a href="#formAddLocation" data-theme="a" data-transition="slide" id="btn_add_location" data-direction="reverse">Add Location</a>
-            <h1>Maps Traffic</h1>
-            <a href="#formFindStreet" data-rel="ok" id ="btn_get_street" data-transition="slide" >Find Street</a>
-         </div>
-         <div data-role="content" id="content" style="padding: 0;
-             position : absolute !important; 
-             top : 40px !important;  
-             right : 0; 
-             bottom : 0px !important;  
-             left : 0 !important;">
-            <div id="map-canvas" style="height:100%"></div>
-        </div>
+         
+            <div data-role="header" data-position="fixed">
+               <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">Open left panel</a>
+               <!-- <a href="#formAddLocation" data-theme="a" data-transition="slide" id="btn_add_location" data-direction="reverse">Add Location</a>
+ -->               <h1>Maps Traffic</h1>
+               <a href="#formFindStreet" data-rel="ok" id ="btn_get_street" data-transition="slide" >Find Street</a>
+            </div>
+               <div data-role="content" id="content" style="padding: 0;
+                   position : absolute !important; 
+                   top : 0px !important;  
+                   right : 0; 
+                   bottom : 0px !important;  
+                   left : 0 !important;">
+                  <div id="map-canvas" style="height:100%"></div>
+              </div>
+           
+           <!-- Panel Slide menu -->
+            <div data-role="panel" id="left-panel" data-display="push" data-position="left" data-theme="a">
+                  <p>Left reveal panel.</p>
+                  <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
+            </div>
+
+            <!-- end panel slide menu --> 
       </div>
       
       <a id="my_location" href="#"><img src="mylocation.png" alt="USA" class="ui-li-icon"></a>
 
       <!-- /page -->
+      
+      
+
       <div data-role="page" id="formFindStreet">
          <div data-role="header" data-position="fixed">
             <a href="#" data-rel="back" data-theme="a">Back</a>

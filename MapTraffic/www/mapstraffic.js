@@ -72,7 +72,7 @@ function calcRoute() {
     var selectedMode = $('#modeTravel').val();
     var start = $('#point_start').val();
     var end = $('#point_end').val();
-    console.log(selectedMode +"  " +start+ "  "+ stop);
+    //console.log(selectedMode +"  " +start+ "  "+ stop);
     var request = {
         origin: start,
         destination: end,
@@ -92,8 +92,9 @@ function calcRoute() {
             }
             dataJsonStreet = '{\"street\":[';
             for (var i = 0; i < route.overview_path.length; i++) {
-                dataJsonStreet += "{\"latitude\":\"" + route.overview_path[i].k + "\",\"longitude\":\"" + route.overview_path[i].B + "\"},";
-                arrLatLng.push(new google.maps.LatLng(route.overview_path[i].k, route.overview_path[i].B));
+                //console.log(route.overview_path[i].toSource());
+                dataJsonStreet += "{\"latitude\":\"" + route.overview_path[i].k + "\",\"longitude\":\"" + route.overview_path[i].D + "\"},";
+                arrLatLng.push(new google.maps.LatLng(route.overview_path[i].k, route.overview_path[i].D));
             }
 
 		/*
@@ -111,10 +112,10 @@ function calcRoute() {
             var lengthDataJson = dataJsonStreet.length;
             dataJsonStreet = dataJsonStreet.substring(0, lengthDataJson - 1);
             dataJsonStreet += ']}';
-
+            //console.log(dataJsonStreet);
             //post data into server
-            postDataToServer(dataJsonStreetJ);
-            alert("Success");
+            postDataToServer(dataJsonStreet);
+            //alert("Success");
             //summaryPanel.innerHTML += dataJsonStreet + "<br>Length: " + arrLatLng.length;
             //summaryPanel.innerHTML += arrLatLng.toString();
             // Các tọa độ của đường thẳng sẽ đi qua
@@ -194,6 +195,21 @@ $("#get_location_end_from_map").click(function(){
 	isCheckGetLocation = 0;
 	isCheckGetLocationEnd = 1;
 	isCheckGetLocationStart = 0;
+});
+
+$( document ).on( "pageinit", "#mainPager", function() {
+    $( document ).on( "swipeleft swiperight", "#mainPager", function( e ) {
+        // We check if there is no open panel on the page because otherwise
+        // a swipe to close the left panel would also open the right panel (and v.v.).
+        // We do this by checking the data that the framework stores on the page element (panel: open).
+        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
+            if ( e.type === "swipeleft"  ) {
+                $( "#right-panel" ).panel( "open" );
+            } else if ( e.type === "swiperight" ) {
+                $( "#left-panel" ).panel( "open" );
+            }
+        }
+    });
 });
 
 google.maps.event.addDomListener(window, 'load', initialize);
