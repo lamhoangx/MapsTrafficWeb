@@ -16,12 +16,11 @@
    </head>
    <body>
       <div data-role="page" id = "mainPager">
-         
             <div data-role="header" data-position="fixed">
                <a href="#left-panel" data-theme="d" data-icon="arrow-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">Open left panel</a>
                <!-- <a href="#formAddLocation" data-theme="a" data-transition="slide" id="btn_add_location" data-direction="reverse">Add Location</a>
  -->               <h1>Maps Traffic</h1>
-               <a href="#formFindStreet" data-rel="ok" id ="btn_get_street" data-transition="slide" >Find Street</a>
+               <!-- <a href="#formFindStreet" data-rel="ok" id ="btn_get_street" data-transition="slide" >Find Street</a> -->
             </div>
                <div data-role="content" id="content" style="padding: 0;
                    position : absolute !important; 
@@ -34,12 +33,23 @@
            
            <!-- Panel Slide menu -->
             <div data-role="panel" id="left-panel" data-display="push" data-position="left" data-theme="a">
-                  <p>Left reveal panel.</p>
-                  <a href="#" data-rel="close" data-role="button" data-mini="true" data-inline="true" data-icon="delete" data-iconpos="right">Close</a>
-            </div>
-
+                 
+               <div>
+                  <ul data-role="listview">
+                     <li data-role="list-divider">Menu</li>
+                     <li><a href="#formAddLocation" data-rel="ok" data-transition="slide" id="btn_add_location" >Add Location</a></li>
+                     <li><a href="#formFindStreet" data-rel="ok" data-transition="slide" id ="btn_get_street" >Find Street</a></li>
+                     <li><a href="#formAddLocation">Dialogs</a></li>
+                   
+                  </ul>
+            <!-- data-transition="slide" data-direction="reverse" -->
             <!-- end panel slide menu --> 
+               </div>
+
+
       </div>
+      </div>
+
       
       <a id="my_location" href="#"><img src="mylocation.png" alt="USA" class="ui-li-icon"></a>
 
@@ -85,7 +95,7 @@
       
       <div data-role="page" id="formAddLocation">
          <div data-role="header" data-position="fixed">
-            <a href="#mainPager" data-theme="a" data-transition="slide">Back</a>
+            <a href="#mainPager" data-rel="back" data-theme="a">Back</a>
             <h1>Add Location</h1>
             <a href="#mainPager" data-rel="ok" id ="btn_location_ok_post" data-transition="pop">OK</a>
          </div>
@@ -129,26 +139,6 @@
                <li><a href="#">Page transitions</a></li>
                <li><a href="#">Dialogs</a></li>
                <li><a href="#">Navigation: Ajax, hashes &amp; history</a></li>
-               <li><a href="#">Link format examples</a></li>
-               <li><a href="#">Theming pages</a></li>
-               <li><a href="#">Anatomy of a page</a></li>
-               <li><a href="#">Page transitions</a></li>
-               <li><a href="#">Dialogs</a></li>
-               <li><a href="#">Navigation: Ajax, hashes &amp; history</a></li>
-               <li><a href="#">Link format examples</a></li>
-               <li><a href="#">Theming pages</a></li>
-               <li><a href="#">Anatomy of a page</a></li>
-               <li><a href="#">Page transitions</a></li>
-               <li><a href="#">Dialogs</a></li>
-               <li><a href="#">Navigation: Ajax, hashes &amp; history</a></li>
-               <li><a href="#">Link format examples</a></li>
-               <li><a href="#">Theming pages</a></li>
-               <li><a href="#">Anatomy of a page</a></li>
-               <li><a href="#">Page transitions</a></li>
-               <li><a href="#">Dialogs</a></li>
-               <li><a href="#">Navigation: Ajax, hashes &amp; history</a></li>
-               <li><a href="#">Link format examples</a></li>
-               <li><a href="#">Theming pages</a></li>
             </ul>
          </div>
       </div>

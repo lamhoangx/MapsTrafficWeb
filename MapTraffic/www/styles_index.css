@@ -32,7 +32,12 @@
     border: none;
 }
 /* Content styling. */
-
+.ui-panel-inner{
+  padding: 0px;
+}
+#left-panel{
+  background-color: #F6F6F6;
+}
 dl {
     font-family: "Times New Roman", Times, serif;
     padding: 1em;
