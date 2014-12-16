@@ -61,3 +61,20 @@ dd {
     float: right;
     margin: 0 2em 1em 0;
 }
+h5 {
+  font-style: bold;
+}
+/* Marker Info Window */
+h4.marker-heading{color: #585858;margin: 0px;padding: 0px;font: 15px "Trebuchet MS", Arial;border-bottom: 1px dotted #D8D8D8;}
+div.marker-info-win {margin-right: -20px;}
+div.marker-info-win p{padding: 0px;margin: 10px 0px 10px 0;}
+div.marker-inner-win{padding: 5px;}
+button.save-marker, button.remove-marker{
+  border: none;
+  background: rgba(0, 0, 0, 0);
+  color: #00F;
+  padding: 0px;
+  text-decoration: underline;
+  margin-right: 10px;
+  cursor: pointer;
+}

@@ -1,4 +1,5 @@
-var server = 'http://128.199.139.117';
+// var server = 'http://128.199.139.117';
+var server = 'http://127.0.0.1';
 var dataJsonStreet;
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService(); //gọi direction service
@@ -10,6 +11,7 @@ var currentLocation = 0;
 var isCheckGetLocationStart = 0;
 var isCheckGetLocationEnd = 0;
 var token = '';
+var responseServer;
 
 function onDeviceReady() {
     alert('ready');
@@ -122,67 +124,71 @@ function calcRoute() {
         }
     });
 }
-function setHeader(xhr) {
-  xhr.setRequestHeader('Authorization', token);
-}
+
 function postDataToServer(data) {
     // if (token == '')
     //   token = doCheck();
     //console.log('post to server');
     console.log(data);
-    $.post(server, data, function(dataResponse,status,xhr) {
+    $.post(server, data, function(dataResponse, status, xhr) {
+        responseServer = dataResponse.Message;
+        var arrLocations = dataResponse.AllFound;
+        setMarkers(map, arrLocations);
         console.log(dataResponse);
-        console.log(status);
-        console.log(xhr);
-    },'json').done(function() {
+        //console.log(status);
+        //console.log(xhr);
+        // for (var i = 0; i < arrLocation.length; i++) {
+        //     console.log(arrLocation[i]);
+        //     var myLatlng = new google.maps.LatLng(arrLocation[i].locationX, arrLocation[i].locationY);
+        //     var strError = arrLocation[i].loivipham;
+        //     console.log(strError);
+        //     var marker = new google.maps.Marker({
+        //         position: myLatlng,
+        //         title: arrLocation[i].diadiem,
+        //         content: arrLocation[i].loivipham
+        //     });
+        //     var infoWindow = new google.maps.InfoWindow();
+        //     google.maps.event.addListener(marker, 'click', function() {
+        //         // var markerContent = strError;
+        //         // infoWindow.setContent(markerContent);
+        //         // infoWindow.open(map, this);
+        //     });
+        //     marker.setMap(map);
+        // }
+    }, 'json').done(function() {
         console.log("second success");
     }).fail(function() {
         console.log("error");
     }).always(function() {
         console.log("finished");
     });
+}
 
-    // $.ajax({
-
-    //     url: server,
-    //     data: data,
-    //     type: 'POST',
-    //     contentType: 'text/plain',
-    //     xhrFields: {
-    //         // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
-    //         // This can be used to set the 'withCredentials' property.
-    //         // Set the value to 'true' if you'd like to pass cookies to the server.
-    //         // If this is enabled, your server must respond with the header
-    //         // 'Access-Control-Allow-Credentials: true'.
-    //         withCredentials: false
-    //       },
-    //       headers:
-    //        'Access-Control-Allow-Credentials: true'
-    //         // Set any custom headers here.
-    //         // If you set any non-simple headers, your server must include these
-    //         // headers in the 'Access-Control-Allow-Headers' response header.
-    //       ,
-    //     crossDomain: true,
-    //     // dataType: 'json',
-    //     success: function() { alert("Success"); },
-    //     error: function() { alert('Failed!'); },
-    //     // beforeSend: setHeader
-    // });
-    console.log('finish post');
-
-    // $.ajax({
-    // url: server,
-    // data: data
-    // }).done(function(data) {
-    //     alert("Success: " + data.param1);
-    // }).fail(function() {
-    //     alert("Error");
-    // });
-
-    // $.post(server, data, function( response ) {
-    //     console.log(response); // John
-    // }, "json");
-    // console.log('Finish Post');
+function setMarkers(map, locations) {
+    var marker, i
+    for (i = 0; i < locations.length; i++) {
+        var address = locations[i].diadiem;
+        var lat = locations[i].locationX;
+        var lng = locations[i].locationY;
+        var error = locations[i].loivipham;
+        latlngset = new google.maps.LatLng(lat, lng);
+        var marker = new google.maps.Marker({
+            map: map,
+            title: address,
+            position: latlngset
+            // icon: path
+        });
+        map.setCenter(marker.getPosition());
+        //var content = '<div <h5>'+ address+ '</h5><br>' + error+ '</div>';
+        var contentString = $('<div class="marker-info-win">' + '<div class="marker-inner-win"><span class="info-content">' + '<h4 class="marker-heading">' + address + '</h4>' + error + '</span>' + '</div></div>');
+        var infowindow = new google.maps.InfoWindow();
+        google.maps.event.addListener(marker, 'click', (function(marker, content, infowindow) {
+            return function() {
+                infowindow.setContent(contentString[0]);
+                infowindow.open(map, marker);
+            };
+        })(marker, contentString[0], infowindow));
+    }
 }
 
 function postLocationToServer(data) {
@@ -196,10 +202,9 @@ function postLocationToServer(data) {
     // }).always(function() {
     //     console.log("finished");
     // });
-
     $.ajax({
-    url: server,
-    data: data
+        url: server,
+        data: data
     }).done(function(data) {
         alert("Success: " + data.param1);
     }).fail(function() {
@@ -243,7 +248,6 @@ $("#get_location_end_from_map").click(function() {
     isCheckGetLocationEnd = 1;
     isCheckGetLocationStart = 0;
 });
-
 // $( document ).on( "pageinit", "#mainPager", function() {
 //     $( document ).on( "swipeleft swiperight", "#mainPager", function( e ) {
 //         // We check if there is no open panel on the page because otherwise
