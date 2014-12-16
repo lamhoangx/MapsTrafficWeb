@@ -10,7 +10,6 @@ var isCheckGetLocation = 0;
 var currentLocation = 0;
 var isCheckGetLocationStart = 0;
 var isCheckGetLocationEnd = 0;
-var token = '';
 var responseServer;
 
 function onDeviceReady() {
@@ -23,7 +22,25 @@ function onDeviceReady() {
 
 function onSuccessPos(position) {
     currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    for(var i =0; i< arrLatLng.length; i++){
+        if(getDistance(currentLocation,arrLatLng[i].getPosition()) < 100){
+            alert('warning police!!!');
+        }
+    }
 }
+
+var rad = function(x) {
+    return x * Math.PI / 180;
+};
+var getDistance = function(p1, p2) {
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = rad(p2.lat() - p1.lat());
+    var dLong = rad(p2.lng() - p1.lng());
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) * Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    return d; // returns the distance in meter
+};
 
 function onError(error) {
     alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
@@ -39,6 +56,7 @@ function initialize() {
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); //hiển thị các thông báo khi chỉ dẫn
     directionsDisplay.setMap(map);
+    
     //directionsDisplay.setPanel(document.getElementById('directions-panel'));//hiển thị các kết quả chỉ dẫn
     var myLocation = document.getElementById('my_location');
     myLocation.style.display = 'block';
@@ -96,7 +114,7 @@ function calcRoute() {
             for (var i = 0; i < route.overview_path.length; i++) {
                 //console.log(route.overview_path[i].toSource());
                 dataJsonStreet += "{\"latitude\":\"" + route.overview_path[i].k + "\",\"longitude\":\"" + route.overview_path[i].D + "\"},";
-                arrLatLng.push(new google.maps.LatLng(route.overview_path[i].k, route.overview_path[i].D));
+                //arrLatLng.push(new google.maps.LatLng(route.overview_path[i].k, route.overview_path[i].D));
             }
             /*
              flightPath = new google.maps.Polyline({
@@ -134,27 +152,7 @@ function postDataToServer(data) {
         responseServer = dataResponse.Message;
         var arrLocations = dataResponse.AllFound;
         setMarkers(map, arrLocations);
-        console.log(dataResponse);
-        //console.log(status);
-        //console.log(xhr);
-        // for (var i = 0; i < arrLocation.length; i++) {
-        //     console.log(arrLocation[i]);
-        //     var myLatlng = new google.maps.LatLng(arrLocation[i].locationX, arrLocation[i].locationY);
-        //     var strError = arrLocation[i].loivipham;
-        //     console.log(strError);
-        //     var marker = new google.maps.Marker({
-        //         position: myLatlng,
-        //         title: arrLocation[i].diadiem,
-        //         content: arrLocation[i].loivipham
-        //     });
-        //     var infoWindow = new google.maps.InfoWindow();
-        //     google.maps.event.addListener(marker, 'click', function() {
-        //         // var markerContent = strError;
-        //         // infoWindow.setContent(markerContent);
-        //         // infoWindow.open(map, this);
-        //     });
-        //     marker.setMap(map);
-        // }
+        console.log(arrLatLng);
     }, 'json').done(function() {
         console.log("second success");
     }).fail(function() {
@@ -165,8 +163,8 @@ function postDataToServer(data) {
 }
 
 function setMarkers(map, locations) {
-    var marker, i
-    for (i = 0; i < locations.length; i++) {
+   
+    for (var i = 0; i < locations.length; i++) {
         var address = locations[i].diadiem;
         var lat = locations[i].locationX;
         var lng = locations[i].locationY;
@@ -176,15 +174,15 @@ function setMarkers(map, locations) {
             map: map,
             title: address,
             position: latlngset
-            // icon: path
         });
+        arrLatLng.push(marker);
         map.setCenter(marker.getPosition());
-        //var content = '<div <h5>'+ address+ '</h5><br>' + error+ '</div>';
         var contentString = $('<div class="marker-info-win">' + '<div class="marker-inner-win"><span class="info-content">' + '<h4 class="marker-heading">' + address + '</h4>' + error + '</span>' + '</div></div>');
         var infowindow = new google.maps.InfoWindow();
-        google.maps.event.addListener(marker, 'click', (function(marker, content, infowindow) {
+        console.log(contentString);
+        infowindow.setContent(contentString[0]);
+        google.maps.event.addListener(marker, 'click', (function(marker, contentString, infowindow) {
             return function() {
-                infowindow.setContent(contentString[0]);
                 infowindow.open(map, marker);
             };
         })(marker, contentString[0], infowindow));
@@ -262,4 +260,5 @@ $("#get_location_end_from_map").click(function() {
 //         }
 //     });
 // });
+
 google.maps.event.addDomListener(window, 'load', initialize);
