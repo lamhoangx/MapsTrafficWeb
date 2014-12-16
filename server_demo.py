@@ -135,11 +135,8 @@ def findFound(data):
 			YMAX = Y
 		elif Y < YMIN:
 			YMIN = Y
-	# print "X:",XMAX,XMIN
-	# print "Y:",YMAX,YMIN
-	# print selectDB()
+
 	founds = selectDB("where locationX<"+str(decimal.Decimal(XMAX))+" and locationX>"+str(decimal.Decimal(XMIN))+" and locationY<"+str(decimal.Decimal(YMAX))+" and locationY>"+str(decimal.Decimal(YMIN)))
-	# print founds,type(founds)
 	if len(founds)>0:
 		finalFound = findFound2Point(data,founds)
 		print "finalFound",finalFound
@@ -153,6 +150,7 @@ def findFound(data):
 			found["diadiem"] = itm[1]
 			listFound.append(found)
 		founddata["Message"]= "Found"
+		listFound = map(dict, set(tuple(sorted(d.items())) for d in listFound))
 		founddata["AllFound"] = listFound
 	else:
 		founddata = {}
