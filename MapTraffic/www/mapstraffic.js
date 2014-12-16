@@ -9,6 +9,7 @@ var isCheckGetLocation = 0;
 var currentLocation = 0;
 var isCheckGetLocationStart = 0;
 var isCheckGetLocationEnd = 0;
+var token = '';
 
 function onDeviceReady() {
     alert('ready');
@@ -121,27 +122,67 @@ function calcRoute() {
         }
     });
 }
-
+function setHeader(xhr) {
+  xhr.setRequestHeader('Authorization', token);
+}
 function postDataToServer(data) {
-    console.log('post to server');
-    // $.post(server, data, function() {
-    //     console.log("success");
-    // }).done(function() {
-    //     console.log("second success");
-    // }).fail(function() {
-    //     console.log("error");
-    // }).always(function() {
-    //     console.log("finished");
-    // });
-    // console.log('finish post');
-    $.ajax({
-    url: server,
-    data: data
-    }).done(function(data) {
-        alert("Success: " + data.param1);
+    // if (token == '')
+    //   token = doCheck();
+    //console.log('post to server');
+    console.log(data);
+    $.post(server, data, function(dataResponse,status,xhr) {
+        console.log(dataResponse);
+        console.log(status);
+        console.log(xhr);
+    },'json').done(function() {
+        console.log("second success");
     }).fail(function() {
-        alert("Error");
+        console.log("error");
+    }).always(function() {
+        console.log("finished");
     });
+
+    // $.ajax({
+
+    //     url: server,
+    //     data: data,
+    //     type: 'POST',
+    //     contentType: 'text/plain',
+    //     xhrFields: {
+    //         // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
+    //         // This can be used to set the 'withCredentials' property.
+    //         // Set the value to 'true' if you'd like to pass cookies to the server.
+    //         // If this is enabled, your server must respond with the header
+    //         // 'Access-Control-Allow-Credentials: true'.
+    //         withCredentials: false
+    //       },
+    //       headers:
+    //        'Access-Control-Allow-Credentials: true'
+    //         // Set any custom headers here.
+    //         // If you set any non-simple headers, your server must include these
+    //         // headers in the 'Access-Control-Allow-Headers' response header.
+    //       ,
+    //     crossDomain: true,
+    //     // dataType: 'json',
+    //     success: function() { alert("Success"); },
+    //     error: function() { alert('Failed!'); },
+    //     // beforeSend: setHeader
+    // });
+    console.log('finish post');
+
+    // $.ajax({
+    // url: server,
+    // data: data
+    // }).done(function(data) {
+    //     alert("Success: " + data.param1);
+    // }).fail(function() {
+    //     alert("Error");
+    // });
+
+    // $.post(server, data, function( response ) {
+    //     console.log(response); // John
+    // }, "json");
+    // console.log('Finish Post');
 }
 
 function postLocationToServer(data) {
