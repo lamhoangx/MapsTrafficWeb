@@ -37,6 +37,14 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.vibration/www/vibration.js",
+        "id": "org.apache.cordova.vibration.notification",
+        "merges": [
+            "navigator.notification",
+            "navigator"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -190,6 +198,7 @@ module.exports.metadata =
     "org.apache.cordova.device": "0.2.13",
     "org.apache.cordova.media": "0.2.15",
     "org.apache.cordova.network-information": "0.2.14",
+    "org.apache.cordova.vibration": "0.3.12",
     "org.apache.cordova.file": "1.3.2"
 }
 // BOTTOM OF METADATA

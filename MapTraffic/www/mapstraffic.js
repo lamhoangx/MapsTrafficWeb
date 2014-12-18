@@ -1,5 +1,6 @@
-// var server = 'http://128.199.139.117';
+//var server = 'http://128.199.139.117';
 var server = 'http://127.0.0.1';
+// var server = 'http://10.0.3.2';
 var dataJsonStreet;
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService(); //gọi direction service
@@ -24,7 +25,10 @@ function onSuccessPos(position) {
     currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     for(var i =0; i< arrLatLng.length; i++){
         if(getDistance(currentLocation,arrLatLng[i].getPosition()) < 100){
-            alert('warning police!!!');
+            // alert('warning police!!!');
+            navigator.vibrate([1000, 1000, 3000, 1000, 5000]); //vibrate 1s -> wait 1s -> vibrate 3s -> wait 1s -> vibrate 5s
+            navigator.vibrate(3000); //vibrate for 3 seconds.
+            playMP3();
         }
     }
 }
@@ -246,6 +250,17 @@ $("#get_location_end_from_map").click(function() {
     isCheckGetLocationEnd = 1;
     isCheckGetLocationStart = 0;
 });
+
+function playMP3() {
+    var mp3URL = getMediaURL("sounds/button-1.mp3");
+    var media = new Media(mp3URL, null, mediaError);
+    media.play();
+}
+
+function getMediaURL(s) {
+    if(device.platform.toLowerCase() === "android") return "/android_asset/www/" + s;
+    return s;
+}
 // $( document ).on( "pageinit", "#mainPager", function() {
 //     $( document ).on( "swipeleft swiperight", "#mainPager", function( e ) {
 //         // We check if there is no open panel on the page because otherwise

@@ -23,4 +23,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <feature name="Vibration">
+        <param name="android-package" value="org.apache.cordova.vibration.Vibration" />
+    </feature>
 </widget>
