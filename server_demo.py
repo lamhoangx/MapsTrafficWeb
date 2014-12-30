@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 import SocketServer
 import json
 import mysql.connector
@@ -152,9 +153,7 @@ def findFound(data):
 			found["locationY"] = str(itm[3])
 			found["diadiem"] = itm[1]
 			listFound.append(found)
-			
 		founddata["Message"]= "Found"
-		listFound = map(dict, set(tuple(sorted(d.items())) for d in listFound))
 		founddata["AllFound"] = listFound
 	else:
 		founddata = {}
@@ -194,9 +193,8 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
 		print "Send to client:","HTTP/1.1\nAccess-Control-Allow-Origin: *\r\n\r\n"+json.dumps(data2send)
 		print "="*40
 		self.request.sendall("HTTP/1.1\nAccess-Control-Allow-Origin: *\r\n\r\n"+json.dumps(data2send))
-#mysql.connector.connect(user='root', password='cs322f12', database='demomobile')
 try:
-	cnx = mysql.connector.connect(user='root', password='a', database='demomobile')
+	cnx = mysql.connector.connect(user='root', password='cs332f12', database='demomobile')
 except mysql.connector.Error as err:
 	if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
 		print("Something is wrong with your user name or password")
