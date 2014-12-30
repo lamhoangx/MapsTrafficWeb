@@ -1,5 +1,5 @@
-//var server = 'http://128.199.139.117';
-var server = 'http://127.0.0.1';
+var server = 'http://128.199.139.117';
+//var server = 'http://127.0.0.1';
 // var server = 'http://10.0.3.2';
 var dataJsonStreet;
 var directionDisplay;
@@ -12,30 +12,50 @@ var currentLocation = 0;
 var isCheckGetLocationStart = 0;
 var isCheckGetLocationEnd = 0;
 var responseServer;
+var myloc;
+var circle;
+var cityCircle;
+
+var CircleOptions = {
+      strokeColor: '#6699CC',
+      strokeOpacity: 0.8,
+      strokeWeight: 1,
+      fillColor: '#6699CC',
+      fillOpacity: 0.35,
+      radius: 1500
+    };
+ var cityCircle = new google.maps.Circle(CircleOptions);
 
 function onDeviceReady() {
-    alert('ready');
+    //alert('ready');
     navigator.geolocation.watchPosition(onSuccessPos, onError, {
         timeout: 10000,
         enableHighAccuracy: true
     });
 }
 
+// Function get current location from device
 function onSuccessPos(position) {
     currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    for(var i =0; i< arrLatLng.length; i++){
-        if(getDistance(currentLocation,arrLatLng[i].getPosition()) < 100){
+    myloc.setPosition(currentLocation);
+    
+    cityCircle.setCenter(currentLocation);
+    //map.fitBounds(cityCircle.getBounds());
+    for (var i = 0; i < arrLatLng.length; i++) {
+        if (getDistance(currentLocation, arrLatLng[i].getPosition()) < 100) {
             // alert('warning police!!!');
+            //get API cordova vibrate
             navigator.vibrate([1000, 1000, 3000, 1000, 5000]); //vibrate 1s -> wait 1s -> vibrate 3s -> wait 1s -> vibrate 5s
             navigator.vibrate(3000); //vibrate for 3 seconds.
             playMP3();
         }
     }
 }
-
 var rad = function(x) {
     return x * Math.PI / 180;
 };
+
+//get distance from 2 point on map
 var getDistance = function(p1, p2) {
     var R = 6378137; // Earth’s mean radius in meter
     var dLat = rad(p2.lat() - p1.lat());
@@ -52,6 +72,7 @@ function onError(error) {
 
 function initialize() {
     document.addEventListener("deviceready", onDeviceReady, false);
+    
     directionsDisplay = new google.maps.DirectionsRenderer();
     var mapOptions = {
         center: new google.maps.LatLng(10.87178429, 106.80741102),
@@ -60,7 +81,7 @@ function initialize() {
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); //hiển thị các thông báo khi chỉ dẫn
     directionsDisplay.setMap(map);
-    
+    cityCircle.setMap(map);
     //directionsDisplay.setPanel(document.getElementById('directions-panel'));//hiển thị các kết quả chỉ dẫn
     var myLocation = document.getElementById('my_location');
     myLocation.style.display = 'block';
@@ -86,6 +107,26 @@ function initialize() {
             isCheckGetLocationEnd = 0;
         }
     });
+
+    myloc = new google.maps.Marker({
+        clickable: false,
+        icon: new google.maps.MarkerImage('showlocation.png', 
+            new google.maps.Size(22, 22), 
+            new google.maps.Point(0, 18), 
+            new google.maps.Point(11, 11)
+            
+            //new google.maps.Size(44, 44)
+            ),
+        shadow: null,
+        zIndex: 999,
+        map: map
+    });
+    // new google.maps.Size(22, 22), 
+    //         new google.maps.Point(0, 18), 
+    //         new google.maps.Point(11, 11),
+    //         new google.maps.Size(88, 80)
+
+   
 }
 
 function calcRoute() {
@@ -147,6 +188,7 @@ function calcRoute() {
     });
 }
 
+//function post data to server
 function postDataToServer(data) {
     // if (token == '')
     //   token = doCheck();
@@ -166,8 +208,8 @@ function postDataToServer(data) {
     });
 }
 
+//function add marker into map show location need note.
 function setMarkers(map, locations) {
-   
     for (var i = 0; i < locations.length; i++) {
         var address = locations[i].diadiem;
         var lat = locations[i].locationX;
@@ -213,15 +255,20 @@ function postLocationToServer(data) {
         alert("Error");
     });
 }
+
+//event get street and get possition to noted
 $("#btn_get_street_ok").click(function() {
     //console.log("Post Data");
     calcRoute();
 });
+//event get location by click on map
 $("#get_location_from_map").click(function() {
     isCheckGetLocation = 1;
     isCheckGetLocationEnd = 0;
     isCheckGetLocationStart = 0;
 });
+
+//event click button to post location to server
 $("#btn_location_ok_post").click(function() {
     console.log("Add Data");
     var loc = $('#address_location').val();
@@ -236,8 +283,10 @@ $("#btn_location_ok_post").click(function() {
         console.log(strJson);
     }
 });
+
+//event click get current location
 $("#my_location").click(function() {
-    alert(currentLocation.toString());
+    //alert(currentLocation.toString());
     map.setCenter(currentLocation);
 });
 $("#get_location_start_from_map").click(function() {
@@ -251,6 +300,7 @@ $("#get_location_end_from_map").click(function() {
     isCheckGetLocationStart = 0;
 });
 
+//function play mp3 _ API from cordova.
 function playMP3() {
     var mp3URL = getMediaURL("sounds/button-1.mp3");
     var media = new Media(mp3URL, null, mediaError);
@@ -258,7 +308,7 @@ function playMP3() {
 }
 
 function getMediaURL(s) {
-    if(device.platform.toLowerCase() === "android") return "/android_asset/www/" + s;
+    if (device.platform.toLowerCase() === "android") return "/android_asset/www/" + s;
     return s;
 }
 // $( document ).on( "pageinit", "#mainPager", function() {
@@ -275,5 +325,4 @@ function getMediaURL(s) {
 //         }
 //     });
 // });
-
 google.maps.event.addDomListener(window, 'load', initialize);
