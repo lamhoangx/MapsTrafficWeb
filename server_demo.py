@@ -7,6 +7,7 @@ import time
 import decimal
 import math
 from mysql.connector import errorcode
+import ConfigParser
 
 class MyTCPServer(SocketServer.ThreadingTCPServer):
 	allow_reuse_address = True
@@ -93,8 +94,8 @@ def insertFound(data):
 	return data
 	
 def findFound2Point(data,founds):
-	N = decimal.Decimal("0.00015")
-	dlkc = decimal.Decimal("0.00015") # Do lech khoang cach 30m
+	N = decimal.Decimal("0.0005")
+	dlkc = decimal.Decimal("0.0005") 
 	finalFound = []
 	allPoints = data["street"]
 	for i in xrange(1,len(allPoints)):
@@ -193,8 +194,18 @@ class MyTCPServerHandler(SocketServer.BaseRequestHandler):
 		print "Send to client:","HTTP/1.1\nAccess-Control-Allow-Origin: *\r\n\r\n"+json.dumps(data2send)
 		print "="*40
 		self.request.sendall("HTTP/1.1\nAccess-Control-Allow-Origin: *\r\n\r\n"+json.dumps(data2send))
+
+		
+config = ConfigParser.RawConfigParser()
+config.read('config.ini')
+mysql_user = config.get('account', 'user')
+mysql_password = config.get('account', 'password')
+mysql_db = config.get('database', 'name')
+server_port = int(config.get('server', 'port'))
+print server_port
+		
 try:
-	cnx = mysql.connector.connect(user='root', password='cs332f12', database='demomobile')
+	cnx = mysql.connector.connect(user=mysql_user, password=mysql_password, database=mysql_db,charset='utf8')
 except mysql.connector.Error as err:
 	if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
 		print("Something is wrong with your user name or password")
@@ -206,5 +217,5 @@ except mysql.connector.Error as err:
 		exit();
 cursor = cnx.cursor()
 
-server = MyTCPServer(('0.0.0.0', 80), MyTCPServerHandler)
+server = MyTCPServer(('0.0.0.0', server_port), MyTCPServerHandler)
 server.serve_forever()
