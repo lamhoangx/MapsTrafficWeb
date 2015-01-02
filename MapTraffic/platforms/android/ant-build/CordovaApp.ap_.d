@@ -29,8 +29,6 @@
 /home/hlam393/MapTraffic/platforms/android/ant-build/res/drawable-hdpi/icon.png \
 /home/hlam393/MapTraffic/platforms/android/assets/_where-is-www.txt \
 /home/hlam393/MapTraffic/platforms/android/assets/www \
-/home/hlam393/MapTraffic/platforms/android/assets/www/mylocation.png \
-/home/hlam393/MapTraffic/platforms/android/assets/www/mapstraffic.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/cordova_plugins.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/img \
 /home/hlam393/MapTraffic/platforms/android/assets/www/css \
@@ -38,11 +36,16 @@
 /home/hlam393/MapTraffic/platforms/android/assets/www/index.html \
 /home/hlam393/MapTraffic/platforms/android/assets/www/cordova.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/js \
-/home/hlam393/MapTraffic/platforms/android/assets/www/styles_index.css \
+/home/hlam393/MapTraffic/platforms/android/assets/www/sounds \
+/home/hlam393/MapTraffic/platforms/android/assets/www/img/mylocation.png \
+/home/hlam393/MapTraffic/platforms/android/assets/www/img/showlocation.png \
 /home/hlam393/MapTraffic/platforms/android/assets/www/img/logo.png \
 /home/hlam393/MapTraffic/platforms/android/assets/www/css/index.css \
+/home/hlam393/MapTraffic/platforms/android/assets/www/css/jquery.mobile-1.4.4.min.css \
+/home/hlam393/MapTraffic/platforms/android/assets/www/css/styles_index.css \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.network-information \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.media \
+/home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.vibration \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.file \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.device \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.network-information/www \
@@ -51,6 +54,8 @@
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.media/www \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.media/www/MediaError.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.media/www/Media.js \
+/home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.vibration/www \
+/home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.vibration/www/vibration.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.file/www \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.file/www/DirectoryReader.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.file/www/FileUploadOptions.js \
@@ -76,5 +81,9 @@
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.file/www/android/FileSystem.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.device/www \
 /home/hlam393/MapTraffic/platforms/android/assets/www/plugins/org.apache.cordova.device/www/device.js \
+/home/hlam393/MapTraffic/platforms/android/assets/www/js/mapstraffic.js \
+/home/hlam393/MapTraffic/platforms/android/assets/www/js/jquery-1.11.1.min.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/js/index.js \
+/home/hlam393/MapTraffic/platforms/android/assets/www/js/jquery.mobile-1.4.4.min.js \
+/home/hlam393/MapTraffic/platforms/android/assets/www/sounds/button-1.mp3 \
 /home/hlam393/MapTraffic/platforms/android/ant-build/AndroidManifest.xml \

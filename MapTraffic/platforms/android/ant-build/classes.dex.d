@@ -48,6 +48,7 @@
 /home/hlam393/MapTraffic/platforms/android/ant-build/classes/org/apache/cordova/file/FileUtils$10.class \
 /home/hlam393/MapTraffic/platforms/android/ant-build/classes/org/apache/cordova/file/FileUtils$FileOp.class \
 /home/hlam393/MapTraffic/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
+/home/hlam393/MapTraffic/platforms/android/ant-build/classes/org/apache/cordova/vibration/Vibration.class \
 /home/hlam393/MapTraffic/platforms/android/ant-build/classes/org/apache/cordova/networkinformation/NetworkManager.class \
 /home/hlam393/MapTraffic/platforms/android/ant-build/classes/org/apache/cordova/networkinformation/NetworkManager$1.class \
 /home/hlam393/MapTraffic/platforms/android/ant-build/classes/com/aics/maptraffic/R$string.class \
