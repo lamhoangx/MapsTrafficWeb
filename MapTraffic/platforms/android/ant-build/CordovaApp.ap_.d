@@ -37,6 +37,7 @@
 /home/hlam393/MapTraffic/platforms/android/assets/www/cordova.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/sounds \
+/home/hlam393/MapTraffic/platforms/android/assets/www/styles_index.css \
 /home/hlam393/MapTraffic/platforms/android/assets/www/img/mylocation.png \
 /home/hlam393/MapTraffic/platforms/android/assets/www/img/showlocation.png \
 /home/hlam393/MapTraffic/platforms/android/assets/www/img/logo.png \
@@ -85,5 +86,5 @@
 /home/hlam393/MapTraffic/platforms/android/assets/www/js/jquery-1.11.1.min.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/js/index.js \
 /home/hlam393/MapTraffic/platforms/android/assets/www/js/jquery.mobile-1.4.4.min.js \
-/home/hlam393/MapTraffic/platforms/android/assets/www/sounds/button-1.mp3 \
+/home/hlam393/MapTraffic/platforms/android/assets/www/sounds/sound.mp3 \
 /home/hlam393/MapTraffic/platforms/android/ant-build/AndroidManifest.xml \

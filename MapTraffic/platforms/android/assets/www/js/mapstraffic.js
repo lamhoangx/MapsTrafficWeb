@@ -16,22 +16,21 @@ var myloc;
 var circle;
 var cityCircle;
 var arrMarkers = [];
+var iCheckMoveNear = 0;
 var CircleOptions = {
-      strokeColor: '#6699CC',
-      strokeOpacity: 0.8,
-      strokeWeight: 1,
-      fillColor: '#6699CC',
-      fillOpacity: 0.35,
-      radius: 500
-    };
- var cityCircle = new google.maps.Circle(CircleOptions);
-
+    strokeColor: '#6699CC',
+    strokeOpacity: 0.8,
+    strokeWeight: 1,
+    fillColor: '#6699CC',
+    fillOpacity: 0.35,
+    radius: 500
+};
+var cityCircle = new google.maps.Circle(CircleOptions);
 document.addEventListener("backbutton", onBackKeyDown, false);
 
 function onBackKeyDown() {
     navigator.app.exitApp();
 }
-
 
 function onDeviceReady() {
     //alert('ready');
@@ -40,28 +39,32 @@ function onDeviceReady() {
         enableHighAccuracy: true
     });
 }
-
 // Function get current location from device
 function onSuccessPos(position) {
     currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     myloc.setPosition(currentLocation);
-    
-    cityCircle.setCenter(currentLocation);
+    //cityCircle.setCenter(currentLocation);
     //map.fitBounds(cityCircle.getBounds());
     for (var i = 0; i < arrLatLng.length; i++) {
-        if (getDistance(currentLocation, arrLatLng[i].getPosition()) < 100) {
-            // alert('warning police!!!');
-            //get API cordova vibrate
-            navigator.vibrate([1000, 1000, 3000, 1000, 5000]); //vibrate 1s -> wait 1s -> vibrate 3s -> wait 1s -> vibrate 5s
-            navigator.vibrate(3000); //vibrate for 3 seconds.
-            playMP3();
+        if (getDistance(currentLocation, arrLatLng[i].getPosition()) < 500 && iCheckMoveNear === 0) {
+            if (iCheckMoveNear === 0) {
+                // alert('warning police!!!');
+                //get API cordova vibrate
+                //navigator.vibrate([1000, 1000, 3000, 1000, 5000]); //vibrate 1s -> wait 1s -> vibrate 3s -> wait 1s -> vibrate 5s
+                navigator.vibrate(5000); //vibrate for 3 seconds.
+                playMP3();
+                //alert("Police");
+                iCheckMoveNear = 1;
+                break;
+            }
+        }else if(getDistance(currentLocation, arrLatLng[i].getPosition()) > 500){
+            iCheckMoveNear = 0;
         }
     }
 }
 var rad = function(x) {
     return x * Math.PI / 180;
 };
-
 //get distance from 2 point on map
 var getDistance = function(p1, p2) {
     var R = 6378137; // Earth’s mean radius in meter
@@ -79,12 +82,11 @@ function onError(error) {
 
 function initialize() {
     document.addEventListener("deviceready", onDeviceReady, false);
-    
     directionsDisplay = new google.maps.DirectionsRenderer();
     var locationTemp;
-    if(currentLocation !== 0){
+    if (currentLocation !== 0) {
         locationTemp = currentLocation;
-    }else{
+    } else {
         locationTemp = new google.maps.LatLng(10.87178429, 106.80741102);
     }
     var mapOptions = {
@@ -94,12 +96,10 @@ function initialize() {
     };
     map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions); //hiển thị các thông báo khi chỉ dẫn
     directionsDisplay.setMap(map);
-    cityCircle.setMap(map);
+    //cityCircle.setMap(map);
     //directionsDisplay.setPanel(document.getElementById('directions-panel'));//hiển thị các kết quả chỉ dẫn
-
     // var pac_input = document.getElementById('point_start');
     // new google.maps.places.Autocomplete(pac_input);
-
     var myLocation = document.getElementById('my_location');
     myLocation.style.display = 'block';
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(myLocation);
@@ -124,16 +124,11 @@ function initialize() {
             isCheckGetLocationEnd = 0;
         }
     });
-
     myloc = new google.maps.Marker({
         clickable: false,
-        icon: new google.maps.MarkerImage('img/showlocation.png', 
-            new google.maps.Size(22, 22), 
-            new google.maps.Point(0, 18), 
-            new google.maps.Point(11, 11)
-            
+        icon: new google.maps.MarkerImage('img/showlocation.png', new google.maps.Size(22, 22), new google.maps.Point(0, 18), new google.maps.Point(11, 11)
             //new google.maps.Size(44, 44)
-            ),
+        ),
         shadow: null,
         zIndex: 999,
         map: map
@@ -142,8 +137,6 @@ function initialize() {
     //         new google.maps.Point(0, 18), 
     //         new google.maps.Point(11, 11),
     //         new google.maps.Size(88, 80)
-
-   
 }
 
 function calcRoute() {
@@ -178,8 +171,7 @@ function calcRoute() {
                 dataJsonStreet += "{\"latitude\":\"" + route.overview_path[i].k + "\",\"longitude\":\"" + route.overview_path[i].D + "\"},";
                 //arrLatLng.push(new google.maps.LatLng(route.overview_path[i].k, route.overview_path[i].D));
             }
-
-            map.setZoom(16); 
+            map.setZoom(16);
             map.setCenter(new google.maps.LatLng(route.overview_path[0].k, route.overview_path[0].D));
             /*
              flightPath = new google.maps.Polyline({
@@ -207,7 +199,6 @@ function calcRoute() {
         }
     });
 }
-
 //function post data to server
 function postDataToServer(data) {
     // if (token == '')
@@ -227,9 +218,9 @@ function postDataToServer(data) {
         console.log("finished");
     });
 }
-
 //function add marker into map show location need note.
 function setMarkers(map, locations) {
+    map.setZoom(13);
     for (var i = 0; i < locations.length; i++) {
         var address = locations[i].diadiem;
         var lat = locations[i].locationX;
@@ -253,6 +244,7 @@ function setMarkers(map, locations) {
             };
         })(marker, contentString[0], infowindow));
     }
+    //map.setCenter(pt);
 }
 
 function postLocationToServer(data) {
@@ -275,7 +267,6 @@ function postLocationToServer(data) {
         //alert("Error");
     });
 }
-
 //event get street and get possition to noted
 $("#btn_get_street_ok").click(function() {
     //console.log("Post Data");
@@ -288,7 +279,6 @@ $("#get_location_from_map").click(function() {
     isCheckGetLocationEnd = 0;
     isCheckGetLocationStart = 0;
 });
-
 //event click button to post location to server
 $("#btn_location_ok_post").click(function() {
     console.log("Add Data");
@@ -304,28 +294,26 @@ $("#btn_location_ok_post").click(function() {
         console.log(strJson);
     }
 });
-
 //event click get current location
 $("#my_location").click(function() {
     //alert(currentLocation.toString());
     map.setCenter(currentLocation);
 });
 $("#get_location_start_from_map").click(function() {
-    deleteMarkers();
     isCheckGetLocation = 0;
     isCheckGetLocationEnd = 0;
     isCheckGetLocationStart = 1;
+    deleteMarkers();
 });
 $("#get_location_end_from_map").click(function() {
-    deleteMarkers();
     isCheckGetLocation = 0;
     isCheckGetLocationEnd = 1;
     isCheckGetLocationStart = 0;
+    deleteMarkers();
 });
-
 //function play mp3 _ API from cordova.
 function playMP3() {
-    var mp3URL = getMediaURL("sounds/button-1.mp3");
+    var mp3URL = getMediaURL("sounds/sound.mp3");
     var media = new Media(mp3URL, null, mediaError);
     media.play();
 }
@@ -335,13 +323,20 @@ function getMediaURL(s) {
     return s;
 }
 
+function mediaError(e) {
+    alert('Media Error');
+    alert(JSON.stringify(e));
+}
+
 function deleteMarkers() {
-        //Loop through all the markers and remove
+    //Loop through all the markers and remove
+    if (arrLatLng.length > 0) {
         for (var i = 0; i < arrLatLng.length; i++) {
             arrLatLng[i].setMap(null);
         }
         arrLatLng = [];
-    };
+    }
+};
 // $( document ).on( "pageinit", "#mainPager", function() {
 //     $( document ).on( "swipeleft swiperight", "#mainPager", function( e ) {
 //         // We check if there is no open panel on the page because otherwise
